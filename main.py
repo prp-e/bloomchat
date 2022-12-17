@@ -7,7 +7,9 @@ tokenizer = AutoTokenizer.from_pretrained("bigscience/bloom-1b7")
 
 set_seed(424242) # I think it's not necessary at all 😁
 
-prompt="The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: "
+prompt = "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: "
+prompt = f"{prompt} How exactly can you help me?"
+
 input_ids = tokenizer(prompt, return_tensors="pt").to(0)
-sample = model.generate(**input_ids, max_length=50, top_k=0, temperature=0.7)
+sample = model.generate(**input_ids, max_length=150, top_k=0, temperature=0.7)
 print(tokenizer.decode(sample[0], truncate_before_pattern=[r"\n\n^#", "^'''", "\n\n\n"]))
